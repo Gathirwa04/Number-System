@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Number Converter</title>
+  <style>
+    body {
+      font-family:Arial;
+      text-align: center;
+      margin: 50px;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+
+    h1 {
+      color: #4285f4;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0;
+    }
+
+    input, select, button {
+      padding: 8px;
+      margin: 5px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      background-color: #4285f4;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #357ae8;
+    }
+
+    #result {
+      font-size: 18px;
+      margin-top: 20px;
+    }
+  </style>
+  <title>
+    Number Converter
+  </title>
+</head>
+<body>
+  <h1>Number Converter</h1>
+  <p>Select a base for:</p>  
+ <l1> <label for="inputBase"> input:</label><select id="inputBase">
+    <option value="2">Binary</option>
+    <option value="8">Octal</option>
+    <option value="10" selected>Decimal</option>
+    <option value="16">Hexadecimal</option>
+  </select>
+</l1>
+  <label for="outputBase">conversion:</label>
+  <select id="outputBase">
+    <option value="2">Binary</option>
+    <option value="8">Octal</option>
+    <option value="10" selected>Decimal</option>
+    <option value="16">Hexadecimal</option>
+  </select><br>
+  <label for="inputNumber">Enter a number:</label>
+  <input type="text" id="inputNumber" placeholder="Enter number">
+  
+  
+
+  <button onclick="convert()">Convert</button>
+
+  <p id="Answer"></p>
+
+  <script>
+    function convert() {
+      const inputNumber = document.getElementById('inputNumber').value;
+      const inputBase = parseInt(document.getElementById('inputBase').value, 10);
+      const outputBase = parseInt(document.getElementById('outputBase').value, 10);
+
+      // Check if the input number is valid
+      if (!isValidNumber(inputNumber, inputBase)) {
+        document.getElementById('Answer').innerHTML = 'Invalid input';
+        return;
+      }
+
+      // Convert the input number to decimal first
+      const decimalNumber = parseInt(inputNumber, inputBase);
+
+      // Check if the conversion to decimal was successful
+      if (isNaN(decimalNumber)) {
+        document.getElementById('Answer').innerHTML = 'Invalid input';
+        return;
+      }
+
+      // Convert the decimal number to the desired output base
+      const result = decimalNumber.toString(outputBase).toUpperCase();
+
+      document.getElementById('Answer').innerHTML = `Answer: ${result}`;
+    }
+    function isValidNumber(input, base) {
+      const validChars = new RegExp(`^[0-${base - 1}]+$`);
+      return input.toUpperCase().split('').every(char => validChars.test(char));
+    }
+  </script>
+</body>
+</html>
